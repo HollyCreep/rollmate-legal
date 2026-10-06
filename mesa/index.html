@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Convite para a mesa — Tormenta 20 App</title>
+  <meta property="og:title" content="Convite para uma mesa de Tormenta 20">
+  <meta property="og:description" content="Toque para entrar na mesa pelo app Tormenta 20.">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .invite { text-align: center; }
+    .code { font: 700 40px/1.1 ui-monospace, 'Cascadia Mono', Consolas, monospace; letter-spacing: 0.18em; margin: 8px 0 4px; }
+    .actions { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 8px; }
+    .btn { display: block; border-radius: 12px; padding: 14px 18px; font: 600 17px/1.2 system-ui, sans-serif; text-decoration: none; text-align: center; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; }
+    .box .btn { display: inline-block; margin: 10px auto 0; }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    ol { text-align: left; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Tormenta 20 App</div>
+    <h1>Convite para uma mesa</h1>
+    <p class="muted">Ficha de personagem e mesas para Tormenta 20 — Edição Jogo do Ano.</p>
+  </header>
+
+  <section id="ok" class="invite" hidden>
+    <p>Seu mestre convidou você para a mesa. Código do convite:</p>
+    <div class="box">
+      <div class="code" id="code"></div>
+      <button type="button" class="btn" id="copy">Copiar código</button>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" id="open" href="#">Abrir no app</a>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=com.tormenta20.app">Instalar o app (Google Play)</a>
+    </div>
+    <h2>Não abriu?</h2>
+    <ol>
+      <li>Instale o app Tormenta 20 e entre na sua conta (e-mail ou Google).</li>
+      <li>Toque em <strong>Abrir no app</strong> de novo, ou abra o app em <strong>Mesas → Entrar</strong> e digite o código acima.</li>
+    </ol>
+  </section>
+
+  <section id="bad" hidden>
+    <div class="box">
+      <p><strong>Link de convite incompleto.</strong></p>
+      <p class="muted">Peça o link de novo ao mestre, ou abra o app em Mesas → Entrar e digite o código de 6 letras.</p>
+    </div>
+  </section>
+
+  <footer class="muted">Aplicativo independente, sem vínculo oficial com a Jambô Editora. Tormenta é marca da Jambô Editora.</footer>
+</main>
+<script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var code = (params.get('c') || '').toUpperCase().replace(/\s/g, '');
+    if (!/^[A-Z0-9]{6}$/.test(code)) {
+      document.getElementById('bad').hidden = false;
+      return;
+    }
+    document.getElementById('ok').hidden = false;
+    document.getElementById('code').textContent = code;
+
+    // Android: intent com volta para esta página (sem nova tentativa) se o app não estiver instalado
+    var android = /Android/i.test(navigator.userAgent);
+    var back = location.origin + location.pathname + '?c=' + code + '&app=0';
+    var appUrl = android
+      ? 'intent://mesa?c=' + code + '#Intent;scheme=tormenta20;package=com.tormenta20.app;S.browser_fallback_url=' + encodeURIComponent(back) + ';end'
+      : 'tormenta20://mesa?c=' + code;
+    document.getElementById('open').href = appUrl;
+
+    document.getElementById('copy').addEventListener('click', function () {
+      var btn = this;
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = 'Código copiado';
+      }, function () {
+        btn.textContent = 'Selecione e copie: ' + code;
+      });
+    });
+
+    // Primeira visita no Android: tenta abrir o app sozinho
+    if (android && params.get('app') !== '0') location.href = appUrl;
+  })();
+</script>
+</body>
+</html>
