@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Convite para a mesa — Tormenta 20 App</title>
-  <meta property="og:title" content="Convite para uma mesa de Tormenta 20">
-  <meta property="og:description" content="Toque para entrar na mesa pelo app Tormenta 20.">
+  <title>Convite para a mesa — Rollmate</title>
+  <meta property="og:title" content="Convite para uma mesa no Rollmate">
+  <meta property="og:description" content="Toque para entrar na mesa pelo app Rollmate.">
   <link rel="stylesheet" href="../style.css">
   <style>
     .invite { text-align: center; }
@@ -22,9 +22,9 @@
 <body>
 <main>
   <header>
-    <div class="eyebrow">Tormenta 20 App</div>
+    <div class="eyebrow">Rollmate</div>
     <h1>Convite para uma mesa</h1>
-    <p class="muted">Ficha de personagem e mesas para Tormenta 20 — Edição Jogo do Ano.</p>
+    <p class="muted">Everything your party needs. Fichas, mesa online e compêndio para RPG de mesa.</p>
   </header>
 
   <section id="ok" class="invite" hidden>
@@ -35,11 +35,11 @@
     </div>
     <div class="actions">
       <a class="btn btn-primary" id="open" href="#">Abrir no app</a>
-      <a class="btn" href="https://play.google.com/store/apps/details?id=com.tormenta20.app">Instalar o app (Google Play)</a>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=com.rollmate.app">Instalar o app (Google Play)</a>
     </div>
     <h2>Não abriu?</h2>
     <ol>
-      <li>Instale o app Tormenta 20 e entre na sua conta (e-mail ou Google).</li>
+      <li>Instale o app Rollmate e entre na sua conta (e-mail ou Google).</li>
       <li>Toque em <strong>Abrir no app</strong> de novo, ou abra o app em <strong>Mesas → Entrar</strong> e digite o código acima.</li>
     </ol>
   </section>
@@ -51,7 +51,7 @@
     </div>
   </section>
 
-  <footer class="muted">Aplicativo independente, sem vínculo oficial com a Jambô Editora. Tormenta é marca da Jambô Editora.</footer>
+  <footer class="muted">Rollmate é um aplicativo independente.</footer>
 </main>
 <script>
   (function () {
@@ -68,8 +68,8 @@
     var android = /Android/i.test(navigator.userAgent);
     var back = location.origin + location.pathname + '?c=' + code + '&app=0';
     var appUrl = android
-      ? 'intent://mesa?c=' + code + '#Intent;scheme=tormenta20;package=com.tormenta20.app;S.browser_fallback_url=' + encodeURIComponent(back) + ';end'
-      : 'tormenta20://mesa?c=' + code;
+      ? 'intent://mesa?c=' + code + '#Intent;scheme=rollmate;package=com.rollmate.app;S.browser_fallback_url=' + encodeURIComponent(back) + ';end'
+      : 'rollmate://mesa?c=' + code;
     document.getElementById('open').href = appUrl;
 
     document.getElementById('copy').addEventListener('click', function () {
